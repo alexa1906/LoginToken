@@ -1,11 +1,11 @@
 import { Button, Dropdown, Menu, MenuProps, Modal, Space } from "antd";
 import { useRef, useState } from "react";
 import { SendOutlined, DownOutlined } from "@ant-design/icons";
-import { useGetCertificateType } from "../hooks/useGetCertificateType";
+import { useGetCertificateType } from "../hooks/api/useGetCertificateType";
 
 const Settings = () => {
   const { data } = useGetCertificateType();
-  const [image, setImage] = useState<Blob | MediaSource | null>(null);
+  const [image, setImage] = useState<any>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const inputFile = useRef<HTMLInputElement | null>(null);
 
@@ -51,7 +51,7 @@ const Settings = () => {
         onChange={handleFileUpload}
         type="file"
       />
-      
+
       <Button style={{ marginRight: 100 }} onClick={onButtonClick}>
         Add
       </Button>
@@ -74,11 +74,22 @@ const Settings = () => {
         ]}
       >
         {image && (
-          <img
-            src={URL.createObjectURL(image)}
-            alt="Selected"
-            style={{ maxWidth: "100%" }}
-          />
+          <div>
+            <p>File Name: {image.name}</p>
+            {image.type === "application/pdf" ? (
+              <iframe
+                title="PDF Viewer"
+                src={URL.createObjectURL(image)}
+                style={{ width: "100%", height: "500px", border: "none" }}
+              />
+            ) : (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Selected"
+                style={{ maxWidth: "100%" }}
+              />
+            )}
+          </div>
         )}
       </Modal>
 

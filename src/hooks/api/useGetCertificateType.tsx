@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCertificateTypes } from "../api/services/auth";
+import { fetchCertificateTypes } from "../../api/services/auth";
 
 export const useGetCertificateType = () => {
   const { isLoading, error, data } = useQuery({
@@ -9,8 +9,8 @@ export const useGetCertificateType = () => {
     // if request within 10 seconds of the last fetch, will return the cached data
     staleTime: 10000,
     select: (type) => {
-        return type.data;
-      },
+      return type.data;
+    },
   });
 
   if (isLoading) {
